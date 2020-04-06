@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SBMS.Mobile.Views.HomePage"
+             x:Name="Home"
+             xmlns:rendrer="clr-namespace:SBMS.Mobile.CustomRendrer"
+             xmlns:local="clr-namespace:SBMS.Mobile.Common"
+             xmlns:common="clr-namespace:SBMS.Mobile.Views.Common"
+             xmlns:converters="clr-namespace:SBMS.Mobile.Converters"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             >
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add New" Command="{Binding AddNewStudentCommand}"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:IsReverseBoolConvertor x:Key="IsReverseBoolConvertor" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <ScrollView VerticalOptions="FillAndExpand">
+            <AbsoluteLayout VerticalOptions="Fill">
+                <!--List-->
+                <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+                    <rendrer:InfiniteListView 
+                    x:Name="StudentsList"
+                     ItemsSource="{Binding List}"
+                     VerticalOptions="FillAndExpand" HasUnevenRows="True" SeparatorVisibility="None"
+                     local:ItemTapped.Command="{Binding StudentSelectCommand}" SelectedItem="{Binding SelectedItem,Mode=TwoWay}"
+                     LoadMoreCommand="{Binding LoadListDataCommand}"
+                >
+                        <x:Arguments>
+                            <ListViewCachingStrategy>RecycleElement</ListViewCachingStrategy>
+                        </x:Arguments>
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Frame CornerRadius="2" Margin="6" Padding="10">
+                                        <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                                            <StackLayout HorizontalOptions="StartAndExpand">
+                                                <StackLayout Orientation="Horizontal">
+                                                    <Label Text="{Binding Name,StringFormat='Name: {0}'}" FontSize="13" FontAttributes="Bold" HorizontalOptions="StartAndExpand"></Label>
+                                                    <Image Source="edit_gray" HeightRequest="20" WidthRequest="20" HorizontalOptions="StartAndExpand">
+                                                        <Image.GestureRecognizers>
+                                                            <TapGestureRecognizer Command="{Binding Source={x:Reference Home}, Path=BindingContext.EditStudentCommand}" CommandParameter="{Binding Id}"></TapGestureRecognizer>
+                                                        </Image.GestureRecognizers>
+                                                    </Image>
+                                                </StackLayout>
+                                                <Label Text="{Binding ClassName,StringFormat='Class: {0}'}"></Label>
+                                                <Label Text="{Binding SchoolName,StringFormat='School: {0}'}"></Label>
+                                            </StackLayout>
+                                            <StackLayout HorizontalOptions="End">
+                                                <!--Buy Books Button-->
+                                                <material:MaterialButton Text="Buy Books" ButtonType="Outlined" HorizontalOptions="CenterAndExpand" Command="{Binding Source={x:Reference Home}, Path=BindingContext.BuyBookCommand}" CommandParameter="{Binding Id}"
+                                                                         IsVisible="{Binding IsBooksPurchased, Converter={StaticResource IsReverseBoolConvertor}}"></material:MaterialButton>
+                                                    <!--View Books Button-->
+                                                <material:MaterialButton Text="View Order" ButtonType="Outlined" HorizontalOptions="CenterAndExpand" Command="{Binding Source={x:Reference Home}, Path=BindingContext.BuyBookCommand}" CommandParameter="{Binding Id}"
+                                                                         IsVisible="{Binding IsBooksPurchased}"></material:MaterialButton>
+                                            </StackLayout>
+                                        </StackLayout>
+                                    </Frame>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </rendrer:InfiniteListView>
+                </StackLayout>
+
+                <!--Empty View-->
+                <common:NoRecordFound >
+                    <common:NoRecordFound.EmptyTemplate>
+                        <StackLayout>
+                            <Label Text="No students found" FontAttributes="Bold"></Label>
+                            <!--<material:MaterialButton ButtonType="Outlined" Text="Reset" Command="{Binding LoadListDataCommand}"></material:MaterialButton>-->
+                        </StackLayout>
+                    </common:NoRecordFound.EmptyTemplate>
+                </common:NoRecordFound>
+
+                <!--Loader-->
+                <common:Loader></common:Loader>
+            </AbsoluteLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

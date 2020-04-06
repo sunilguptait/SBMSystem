@@ -1,0 +1,228 @@
+﻿@model List<BMS.ViewModels.Order.InvoiceVM>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Invoice</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        .invoice {
+            border: 1px solid gray;
+            min-height: 615px;
+            width: 46%;
+            float: left;
+            margin-bottom: 4%;
+            padding: 10px;
+        }
+
+        .even {
+            margin-left: 2%;
+        }
+
+        .odd {
+            margin-right: 2%;
+        }
+
+        body {
+            font-size: 1em;
+        }
+
+        .invoice-header {
+            color: gray;
+            font-weight: bold;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .firm {
+            font-size: 16px;
+        }
+
+        .gray-background {
+            background-color: lightgrey;
+        }
+
+        .bill-to {
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+
+        td, th {
+            padding: 3px 2px !important;
+        }
+
+        .page-breaker {
+            display: block;
+            clear: both;
+            page-break-after: always;
+        }
+
+        .total-row {
+            font-size: 13px;
+            font-weight: 400;
+            height: 20px !important;
+        }
+
+        .book-row {
+            height: 20px !important;
+        }
+
+        .books {
+            margin-top: 5px;
+            margin-bottom: 0px;
+        }
+        .no-border {
+            border-left: solid 1px #FFF !important;
+            border-top: solid 1px #FFF !important;
+            border-bottom: solid 1px #FFF !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="">
+        @{
+            var orders = Model.GroupBy(m => m.OrderId).Select(m => new
+            {
+                Key = m.Key,
+                Books = m.ToList()
+            }).ToList();
+        }
+        @for (int i = 0; i < orders.Count; i++)
+        {
+            var order = Model.Where(m => m.OrderId == orders[i].Key).FirstOrDefault();
+            <div class="invoice @(i % 2 == 1 ? "even" : "odd")">
+                <div class="row">
+                    <div class="col-xs-8">
+                        <div class="firm">@order.BookSellerFirmName</div>
+                        <div>@order.BookSellerAddress1,</div>
+                        <div>@order.BookSellerAddress2</div>
+                        <div>@order.BookSellerCity, @order.BookSellerState, @order.BookSellerPostCode</div>
+                        <div>Phone: @order.BookSellerMobile</div>
+                        <table class="table table-bordered bill-to">
+                            <tr>
+                                <td class="gray-background">BILL TO</td>
+                            </tr>
+                        </table>
+                        <div style="max-height:70px;height:70px;min-height:70px;">
+                            <div>@order.StudentName</div>
+                            @if (!string.IsNullOrEmpty(order.ParentName))
+                            {
+                                <div>@order.ParentName</div>
+                            }
+                            else
+                            {
+                                <div>&nbsp;</div>
+                            }
+                            @if (!string.IsNullOrEmpty(order.ParentAddress1))
+                            {
+                                <div>@order.ParentAddress1,</div>
+                                <div>@order.ParentAddress2</div>
+                                <div>@order.ParentCity, @order.ParentState, @order.ParentPostCode</div>
+                                <div>Phone: @order.ParentMobile</div>
+                            }
+                            else
+                            {
+                            }
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="text-right invoice-header">INVOICE</div>
+                        <table class="table table-bordered text-center">
+                            <tr>
+                                <td class="gray-background">ORDER #</td>
+                            </tr>
+                            <tr>
+                                <td>@order.OrderCode</td>
+                            </tr>
+                            <tr>
+                                <td class="gray-background">DATE</td>
+                            </tr>
+                            <tr>
+                                <td>@order.OrderDate</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <table class="table table-bordered books">
+                    <thead>
+                        <tr class="gray-background">
+                            <th>DESCRIPTION</th>
+                            <th>QTY</th>
+                            <th>UNIT PRICE</th>
+                            <th>AMOUNT</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int blankRows = 15 - orders[i].Books.Count;
+                        }
+                        @for (int k = 0; k < orders[i].Books.Count; k++)
+                        {
+                            var book = orders[i].Books[k];
+                            <tr class="book-row">
+                                <td width="50%">
+                                    @if (book.BookName.Length > 35)
+                                    {
+                                        <span>@book.BookName.Substring(0, 35)</span>
+                                    }
+                                    else
+                                    {
+                                        <span>@book.BookName</span>
+                                    }
+                                </td>
+                                <td width="10%" class="text-center">@book.BookQty</td>
+                                <td width="20%" class="text-right">@book.BookPrice</td>
+                                <td width="20%" class="text-right">@book.BookAmount</td>
+                            </tr>
+                        }
+                        @if (blankRows > 0)
+                        {
+                            for (int j = 0; j < blankRows; j++)
+                            {
+                                <tr class="book-row">
+                                    <td>&nbsp;</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            }
+                        }
+                        <tr class="total-row">
+                            <td class="no-border">
+                                &nbsp;
+                            </td>
+                            <td colspan="3">
+                                <div class="row">
+                                    <div class="col-xs-6">Sub Total</div>
+                                    <div class="col-xs-6 text-right">₹ @orders[i].Books.Sum(m => m.BookAmount)</div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="total-row">
+                            <td class="no-border">
+                                &nbsp;
+                            </td>
+                            <td colspan="3">
+                                <div class="row">
+                                    <div class="col-xs-6">Total</div>
+                                    <div class="col-xs-6 text-right">₹ @orders[i].Books.Sum(m => m.BookAmount)</div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            if ((i + 1) % 4 == 0)
+            {
+                <div class="page-breaker"></div>
+            }
+        }
+        }
+    </div>
+</body>
+</html>

@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:converters="clr-namespace:SBMS.Mobile.Converters"
+             xmlns:local="clr-namespace:SBMS.Mobile.Common"
+             xmlns:common="clr-namespace:SBMS.Mobile.Views.Common"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             x:Class="SBMS.Mobile.Views.Order.ViewOrder"
+             x:Name="ViewOrderPage"
+             Title="Order Details"
+             >
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:PriceConverter x:Key="PriceConverter" />
+            <converters:IsReverseBoolConvertor x:Key="IsReverseBoolConvertor" />
+            <converters:IsListVisibleConvertor x:Key="IsListVisibleConvertor" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="" Command="{Binding UpdateCommand}" x:Name="UpdateButton"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <AbsoluteLayout VerticalOptions="Fill">
+            <!--List-->
+            <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" IsVisible="{Binding IsShowEmptyView}">
+                <Frame Padding="10" Margin="5,10,5,5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="15"></RowDefinition>
+                        <RowDefinition Height="15"></RowDefinition>
+                        <RowDefinition Height="15"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <StackLayout Orientation="Horizontal">
+                    <Label Text="{Binding Model.OrderCode,StringFormat='Order No : {0}'}"></Label>
+                        <material:MaterialIconButton Image="qr_code" Command="{Binding ViewQRCodeCommand}" BackgroundColor="Transparent" HeightRequest="40"></material:MaterialIconButton>
+                    </StackLayout>
+                    <Label Text="{Binding Model.OrderDate,StringFormat='Order Date : {0:MM/dd/yyyy}'}" Grid.Column="1"></Label>
+                    <!--Row 2-->
+                    <Label Text="{Binding Model.OrderStatusName,StringFormat='Order Status : {0}'}" Grid.Row="1"></Label>
+                    <Label Text="{Binding Model.PaymentStatusName,StringFormat='Payment Status : {0}'}" Grid.Row="1" Grid.Column="1"></Label>
+                    <!--Row 3-->
+                    <Label Text="{Binding Model.TotalOrderAmount,StringFormat='Total Order Amount : {0}'}" Grid.Row="2"></Label>
+                </Grid>
+            </Frame>
+            <Label Text="Ordered Books" Margin="5,0" FontSize="15"></Label>
+                <ListView x:Name="BooksList"
+                     ItemsSource="{Binding Model.Books}" CachingStrategy="RecycleElement" VerticalOptions="StartAndExpand"
+                     HasUnevenRows="True" SeparatorVisibility="None"
+                     local:ItemTapped.Command="{Binding BookSelectCommand}" SelectedItem="{Binding SelectedItem,Mode=TwoWay}"
+                >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Frame CornerRadius="3" Padding="0" Margin="5,3,5,3" BackgroundColor="{Binding CellColor}" IsVisible="{Binding IsSelected}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="25"></ColumnDefinition>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Margin="6,10,0,10">
+                                            <Frame Padding="3" CornerRadius="5" BackgroundColor="{StaticResource PrimaryColor}" HeightRequest="15" VerticalOptions="Start">
+                                                <Label Text="{Binding ItemIndex}" VerticalTextAlignment="Center" TextColor="White" HorizontalTextAlignment="Center"></Label>
+                                            </Frame>
+                                        </Grid>
+                                        <StackLayout Grid.Column="1" Padding="0,10,5,10">
+                                            <Label Text="{Binding Book_Name}" FontSize="15"></Label>
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label Text="{Binding Book_ShortName}" FontSize="11" HorizontalOptions="StartAndExpand"></Label>
+                                                <StackLayout Orientation="Horizontal" HorizontalOptions="End">
+                                                    <Label Text="{Binding PriceLabel}" FontSize="13" VerticalTextAlignment="Center"></Label>
+                                                    <Label FormattedText="{Binding TotalAmount, Converter={StaticResource PriceConverter},ConverterParameter=13}" VerticalTextAlignment="Center"></Label>
+                                                </StackLayout>
+                                            </StackLayout>
+                                        </StackLayout>
+                                    </Grid>
+
+                                </Frame>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+        </StackLayout>
+            <!--Loader-->
+            <common:Loader></common:Loader>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

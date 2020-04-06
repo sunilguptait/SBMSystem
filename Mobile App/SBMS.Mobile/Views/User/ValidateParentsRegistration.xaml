@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             x:Class="SBMS.Mobile.Views.User.ValidateParentsRegistration"
+             NavigationPage.HasNavigationBar="False"
+             >
+    <ContentPage.Content>
+        <StackLayout Padding="25" VerticalOptions="CenterAndExpand">
+            <Image Source="signinn" HeightRequest="100" WidthRequest="100" HorizontalOptions="Center"></Image>
+            <Label Text="Register" VerticalOptions="Center" Margin="0,0,0,10" TextColor="{StaticResource PrimaryColor}" FontSize="Large" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center"></Label>
+            <Label Text="We just need your mobile number to proceed."
+                   VerticalOptions="Center" FontSize="14" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" Margin="0,0,0,15" />
+
+
+            <material:MaterialTextField Placeholder="Mobile No." Style="{StaticResource MetarialText}" 
+                                        ErrorText="Mobile No. is required." x:Name="MobileNo" InputType="Telephone" />
+
+            <material:MaterialButton Style="{StaticResource MatPrimaryButton}" Margin="0" x:Name="btnContinue" Text="CONTINUE" Clicked="Continue_Clicked" />
+
+            <StackLayout x:Name="StackOTP" IsVisible="False">
+                <material:MaterialTextField Placeholder="OTP" Style="{StaticResource MetarialText}" 
+                                        ErrorText="OTP is required." x:Name="OTP" InputType="Numeric" />
+
+                <material:MaterialButton Style="{StaticResource MatPrimaryButton}" Margin="0" x:Name="btnSubmitOTP" Text="CONTINUE" Clicked="BtnSubmitOTP_Clicked" />
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Already Have An Account?" HorizontalOptions="StartAndExpand" VerticalTextAlignment="Center"></Label>
+                <!--<Label Text="Don't Have Account" TextColor="Black" HorizontalOptions="StartAndExpand" VerticalTextAlignment="Center"></Label>-->
+                <material:MaterialButton
+                                    Style="{StaticResource MatPrimaryButton}" Text="SIGN IN" 
+                                    ButtonType="Text" HorizontalOptions="End" TextColor="{StaticResource PrimaryColor}" Clicked="MaterialButton_Clicked" />
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

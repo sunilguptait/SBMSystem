@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             x:Class="SBMS.Mobile.Views.User.ParentsProfile"
+             Title="Edit Profile"
+             >
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="15">
+
+                <!--<Image Source="userprofile" HeightRequest="120" Aspect="AspectFit"></Image>-->
+                
+                    <material:MaterialTextField x:Name="FirstName" Placeholder="Name" Style="{StaticResource MetarialText}" 
+                                        Text="{Binding Model.Name , Mode=TwoWay}" 
+                                        ErrorText="Name is required."  />
+
+                <material:MaterialTextField x:Name="MobileNo" Placeholder="Mobile No" Style="{StaticResource MetarialText}" 
+                                        Text="{Binding Model.MobileNo , Mode=TwoWay}" 
+                                        ErrorText="Mobile is required."  InputType="Telephone" IsEnabled="False" />
+
+                <material:MaterialTextField x:Name="Email" Placeholder="Email" Style="{StaticResource MetarialText}" 
+                                        Text="{Binding Model.EmailId , Mode=TwoWay}" 
+                                        ErrorText="Email is required."  InputType="Email" IsEnabled="False" />
+
+                <material:MaterialTextField x:Name="Address1" Placeholder="Address" Style="{StaticResource MetarialText}" 
+                                        Text="{Binding Model.Address1 , Mode=TwoWay}" />
+
+                <material:MaterialTextField x:Name="States" Placeholder="State" Style="{StaticResource MetarialText}" 
+                                        Text="{Binding Model.StateName , Mode=TwoWay}"  TextChanged="States_TextChanged"
+                                        InputType="Choice" Choices="{Binding  StatesList}" ChoicesBindingName="StateName"
+                                        ErrorText="State is required" />
+
+                <material:MaterialTextField x:Name="Cities" Placeholder="City" Style="{StaticResource MetarialText}" 
+                                        Text="{Binding Model.CityName , Mode=TwoWay}"  
+                                        InputType="Choice" Choices="{Binding  CitiesList}" ChoicesBindingName="CityName"
+                                        ErrorText="City is required" />
+
+                <material:MaterialTextField x:Name="PostCode" Placeholder="PostCode" Style="{StaticResource MetarialText}" 
+                                        Text="{Binding Model.PostCode , Mode=TwoWay}" MaxLength="6" />
+                
+
+                <material:MaterialButton Style="{StaticResource MatPrimaryButton}" Margin="0,10" Text="Save" Clicked="Save_Clicked" />
+
+                </StackLayout>
+
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

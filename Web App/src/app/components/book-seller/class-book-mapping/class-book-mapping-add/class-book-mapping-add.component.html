@@ -1,0 +1,82 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <!-- <section class="content-header">
+        <h1>
+            Add Class Book Mapping
+        </h1>
+    </section> -->
+    <!-- Main content -->
+    <section class="content">
+        <form [formGroup]="mappingForm" (ngSubmit)="onSubmit(mappingForm.value)">
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="box box-primary">
+                        <!-- <div class="box-header with-border">
+                            <h3 class="box-title">Class Details</h3>
+                        </div> -->
+                        <!-- /.box-header -->
+                        <!-- form start -->
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Class</label>
+                                        <select class="form-control" formControlName="BCM_ClassId" [ngClass]="{ 'has-error': submitted && hasError('BCM_ClassId', 'required') }">
+                                            <option value=''>Select</option>
+                                            <option *ngFor="let item of classList" [value]="item.Value">{{ item.Text }}
+                                            </option>
+                                        </select>
+                                        <div *ngIf="submitted && hasError('BCM_ClassId', 'required')" class="text-danger">Class
+                                            is required
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Book</label>
+                                        <select class="form-control" formControlName="BCM_BookId" [ngClass]="{ 'has-error': submitted && hasError('BCM_BookId', 'required') }">
+                                            <option value=''>Select</option>
+                                            <option *ngFor="let item of booksList" [value]="item.Value">{{ item.Text }}
+                                            </option>
+                                        </select>
+                                        <div *ngIf="submitted && hasError('BCM_BookId', 'required')" class="text-danger">Book
+                                            is required
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Default Quantity</label>
+                                        <input type="text" class="form-control" placeholder="Default Quantity" numbersOnly formControlName="BCM_DefaultQty" [ngClass]="{ 'has-error': submitted && hasError('BCM_DefaultQty', 'required') }"
+                                            maxlength="8">
+                                        <div *ngIf="submitted && hasError('BCM_DefaultQty', 'required')" class="text-danger">
+                                            Default quantity is required</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- /.box-body -->
+
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary mr-2"><i class="fa fa-floppy-o"></i> Submit</button>
+                            &nbsp;
+                            <button type="button" class="btn btn-warning" (click)="onCancel()"> <i class="fa fa-window-close"></i>
+                                Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>

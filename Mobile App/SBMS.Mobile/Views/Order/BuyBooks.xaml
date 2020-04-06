@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:converters="clr-namespace:SBMS.Mobile.Converters"
+             xmlns:local="clr-namespace:SBMS.Mobile.Common"
+             xmlns:common="clr-namespace:SBMS.Mobile.Views.Common"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             x:Class="SBMS.Mobile.Views.Order.BuyBooks"
+             x:Name="BuyBookPage"
+             Title="Purchase Books"
+             >
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:PriceConverter x:Key="PriceConverter" />
+            <converters:IsReverseBoolConvertor x:Key="IsReverseBoolConvertor" />
+            <converters:IsListVisibleConvertor x:Key="IsListVisibleConvertor" />
+        </ResourceDictionary>
+        <Style x:Key="QuantityButtons" TargetType="material:MaterialButton">
+            <Setter  Property="WidthRequest" Value="40"></Setter>
+            <Setter  Property="HeightRequest" Value="35"></Setter>
+            <Setter  Property="Padding" Value="0"></Setter>
+            <Setter  Property="Margin" Value="0"></Setter>
+        </Style>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <!--<ToolbarItem Text="Cart" Command="{Binding AddToCartCommand}"></ToolbarItem>-->
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <AbsoluteLayout VerticalOptions="Fill">
+            <!--List-->
+            <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+                <ListView x:Name="BooksList"
+                     ItemsSource="{Binding List}" CachingStrategy="RecycleElement" VerticalOptions="StartAndExpand"
+                     HasUnevenRows="True" SeparatorVisibility="None"
+                     local:ItemTapped.Command="{Binding BookSelectCommand}" SelectedItem="{Binding SelectedItem,Mode=TwoWay}"
+                >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Frame CornerRadius="3" Padding="0" Margin="5" BackgroundColor="{Binding CellColor}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100"></ColumnDefinition>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                            <ColumnDefinition Width="35"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Image Source="{Binding Book_Image}" WidthRequest="110" HeightRequest="100" Aspect="AspectFill"  />
+                                        <StackLayout Grid.Column="1" Padding="5,10">
+                                            <Label Text="{Binding Book_Name}" FontSize="15"></Label>
+                                            <Label Text="{Binding Book_ShortName}" FontSize="11"></Label>
+                                            <!--<Label Text="{Binding DefaultQuantity,StringFormat='Qty: {0}'}" FontSize="11" FontAttributes="Bold"></Label>-->
+                                            <StackLayout Orientation="Horizontal" Padding="-5,0,0,0">
+                                                <StackLayout HorizontalOptions="StartAndExpand" Orientation="Horizontal">
+                                                <!--Disabled Button-->
+                                                <material:MaterialButton IsVisible="{Binding IsDecrementButtonEnabled, Converter={StaticResource IsReverseBoolConvertor}}" Text="-" ButtonType="Elevated" BackgroundColor="#ccc" BorderColor="#ddd" TextColor="{StaticResource PrimaryColor}" BorderWidth="1" 
+                                                                         PressedBackgroundColor="#ddd" Style="{StaticResource QuantityButtons}"></material:MaterialButton>
+                                                <!--Active Button-->
+                                                <material:MaterialButton IsVisible="{Binding IsDecrementButtonEnabled}" Text="-" ButtonType="Outlined" Style="{StaticResource QuantityButtons}" Command="{Binding Source={x:Reference BuyBookPage}, Path=BindingContext.QuantityDecreaseCommand}" CommandParameter="{Binding .}"></material:MaterialButton>
+                                                <Label Text="{Binding Quantity}" FontAttributes="Bold" FontSize="15" VerticalTextAlignment="Center" Padding="0" Margin="-5,0,-5,0"></Label>
+                                                <!--Disabled Button-->
+                                                <material:MaterialButton IsVisible="{Binding IsIncrementButtonEnabled, Converter={StaticResource IsReverseBoolConvertor}}" Text="+" ButtonType="Elevated" BackgroundColor="#ccc" BorderColor="#ddd" TextColor="{StaticResource PrimaryColor}" BorderWidth="1" 
+                                                                         PressedBackgroundColor="#ddd" Style="{StaticResource QuantityButtons}"></material:MaterialButton>
+
+                                                <material:MaterialButton IsVisible="{Binding IsIncrementButtonEnabled}" Text="+" ButtonType="Outlined" Style="{StaticResource QuantityButtons}" Command="{Binding Source={x:Reference BuyBookPage}, Path=BindingContext.QuantityIncreaseCommand}" CommandParameter="{Binding .}"></material:MaterialButton>
+                                                </StackLayout>
+                                                <StackLayout Orientation="Horizontal" HorizontalOptions="End" Margin="0,0,-35,0">
+                                                    <Label Text="{Binding PriceLabel}" FontSize="13" VerticalTextAlignment="Center"></Label>
+                                                    <Label FormattedText="{Binding TotalAmount, Converter={StaticResource PriceConverter},ConverterParameter=13}" HorizontalOptions="End" VerticalTextAlignment="Center"></Label>
+                                                </StackLayout>
+                                                
+
+                                            </StackLayout>
+                                            <!--<StackLayout Orientation="Horizontal" Spacing="0">
+                                                <Label Text="Total: " FontSize="11"></Label>
+                                                <Label FormattedText="{Binding TotalPrice, Converter={StaticResource PriceConverter},ConverterParameter=11}" FontAttributes="Bold" TextColor="{StaticResource PrimaryColor}"></Label>
+                                            </StackLayout>-->
+                                        </StackLayout>
+                                                    <!--<material:MaterialCheckbox IsSelected="{Binding IsSelected}" Grid.Column="2" VerticalOptions="Start" SelectedChangeCommand="{Binding Source={x:Reference BuyBookPage}, Path=BindingContext.BookSelectionChangeCommand}"  />-->
+                                        <material:MaterialIconButton Image="{Binding ActionButtonIcon}" BackgroundColor="Transparent" HeightRequest="23" MinimumHeightRequest="30" Margin="0,10,0,0" Grid.Column="2" VerticalOptions="Start"
+                                                                     Command="{Binding Source={x:Reference BuyBookPage}, Path=BindingContext.BookSelectionChangeCommand}" CommandParameter="{Binding .}"></material:MaterialIconButton>
+                                    </Grid>
+
+                                </Frame>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <StackLayout VerticalOptions="End" BackgroundColor="#fce4ec" Padding="10" Orientation="Horizontal" IsVisible="{Binding IsShowEmptyView, Converter={StaticResource IsReverseBoolConvertor}}">
+                    <StackLayout HorizontalOptions="StartAndExpand">
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Total Books :"></Label>
+                        <Label VerticalTextAlignment="Center" Text="{Binding TotalBooks}" FontSize="15" HorizontalOptions="StartAndExpand"></Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Total Amount :"></Label>
+                        <Label VerticalTextAlignment="Center" FormattedText="{Binding TotalBooksAmount, Converter={StaticResource PriceConverter},ConverterParameter=15}" HorizontalOptions="StartAndExpand"></Label>
+                    </StackLayout>
+                    </StackLayout>
+                    <material:MaterialButton ButtonType="Outlined" Text="Proceed" BorderColor="{StaticResource PrimaryColor}" HorizontalOptions="End" Command="{Binding ProceedCommand}" CommandParameter="1"></material:MaterialButton>
+                </StackLayout>
+            </StackLayout>
+            <!--Empty View-->
+            <common:NoRecordFound >
+                <common:NoRecordFound.EmptyTemplate>
+                    <StackLayout>
+                        <Label Text="Books not found for this class." FontAttributes="Bold" HorizontalTextAlignment="Center"></Label>
+                    </StackLayout>
+                </common:NoRecordFound.EmptyTemplate>
+            </common:NoRecordFound>
+            <!--Loader-->
+            <common:Loader></common:Loader>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

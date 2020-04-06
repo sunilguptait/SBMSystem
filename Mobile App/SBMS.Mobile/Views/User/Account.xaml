@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SBMS.Mobile.Common"
+             xmlns:rendrer="clr-namespace:SBMS.Mobile.CustomRendrer"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             x:Class="SBMS.Mobile.Views.User.Account"
+             NavigationPage.HasNavigationBar="False"
+             >
+    <ContentPage.Content>
+        <StackLayout HorizontalOptions="FillAndExpand">
+            <Grid HorizontalOptions="FillAndExpand">
+                <Image Source="profile" HeightRequest="600" Aspect="Fill" ></Image>
+                <StackLayout VerticalOptions="End" HorizontalOptions="CenterAndExpand">
+                    <Image Source="userprofile" HeightRequest="120" Aspect="AspectFit"></Image>
+                    <Label Text="{Binding Model.UserName}" HorizontalTextAlignment="Center" FontSize="20"></Label>
+                    <material:MaterialButton Style="{StaticResource MatPrimaryButton}" Text="Edit Profile" Margin="0,-10,0,0"
+                                    ButtonType="Text" TextColor="{StaticResource PrimaryColor}" Command="{Binding EditProfileCommand}" />
+                </StackLayout>
+            </Grid>
+            <ListView CachingStrategy="RecycleElement" SelectedItem="{Binding SelectedItem,Mode=TwoWay}"
+                      HasUnevenRows="True" ItemsSource="{Binding MenuItems}" SeparatorVisibility="None"
+                      local:ItemTapped.Command="{Binding SelectMenuCommand}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <rendrer:ExtendedViewCell SelectedBackgroundColor="#ddd">
+                            <ViewCell.View>
+                                <StackLayout Orientation="Horizontal" Padding="10">
+                                    <Image Source="{Binding Icon}" HeightRequest="25" WidthRequest="25" HorizontalOptions="Start" Margin="0,0,10,0"></Image>
+                                    <Label VerticalTextAlignment="Center" Text="{Binding Title}" FontSize="14" TextColor="#666"></Label>
+                                </StackLayout>
+                            </ViewCell.View>
+                        </rendrer:ExtendedViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <!--<StackLayout Orientation="Horizontal" Padding="10">
+                <Image Source="logout" HeightRequest="28" WidthRequest="28" HorizontalOptions="Start" Margin="0,0,10,0"></Image>
+                <Label VerticalTextAlignment="Center" FontSize="15" TextColor="{StaticResource PrimaryColor}" Text="Logout"></Label>
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding LogoutCommand}"></TapGestureRecognizer>
+                </StackLayout.GestureRecognizers>
+            </StackLayout>-->
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

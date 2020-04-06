@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:converters="clr-namespace:SBMS.Mobile.Converters"
+             xmlns:local="clr-namespace:SBMS.Mobile.Common"
+             xmlns:common="clr-namespace:SBMS.Mobile.Views.Common"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             x:Class="SBMS.Mobile.Views.Order.BuyBooksSummary"
+             x:Name="BuyBookSummaryPage"
+             Title="Summary"
+             >
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:PriceConverter x:Key="PriceConverter" />
+            <converters:IsReverseBoolConvertor x:Key="IsReverseBoolConvertor" />
+            <converters:IsListVisibleConvertor x:Key="IsListVisibleConvertor" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="{Binding StudentDetails.ClassSortName}"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <AbsoluteLayout VerticalOptions="Fill">
+            <!--List-->
+            <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+                <ListView x:Name="BooksList"
+                     ItemsSource="{Binding List}" CachingStrategy="RecycleElement" VerticalOptions="StartAndExpand"
+                     HasUnevenRows="True" SeparatorVisibility="None"
+                     local:ItemTapped.Command="{Binding BookSelectCommand}" SelectedItem="{Binding SelectedItem,Mode=TwoWay}"
+                >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Frame CornerRadius="3" Padding="0" Margin="5,3,5,3" BackgroundColor="{Binding CellColor}" IsVisible="{Binding IsSelected}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="25"></ColumnDefinition>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Margin="6,10,0,10">
+                                            <Frame Padding="3" CornerRadius="5" BackgroundColor="{StaticResource PrimaryColor}" HeightRequest="15" VerticalOptions="Start">
+                                                <Label Text="{Binding ItemIndex}" VerticalTextAlignment="Center" TextColor="White" HorizontalTextAlignment="Center"></Label>
+                                            </Frame>
+                                        </Grid>
+                                        <StackLayout Grid.Column="1" Padding="0,10,5,10">
+                                            <Label Text="{Binding Book_Name}" FontSize="15"></Label>
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label Text="{Binding Book_ShortName}" FontSize="11" HorizontalOptions="StartAndExpand"></Label>
+                                                <StackLayout Orientation="Horizontal" HorizontalOptions="End">
+                                                    <Label Text="{Binding PriceLabel}" FontSize="13" VerticalTextAlignment="Center"></Label>
+                                                    <Label FormattedText="{Binding TotalAmount, Converter={StaticResource PriceConverter},ConverterParameter=13}" VerticalTextAlignment="Center"></Label>
+                                                </StackLayout>
+                                            </StackLayout>
+                                        </StackLayout>
+                                    </Grid>
+
+                                </Frame>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <StackLayout VerticalOptions="End" BackgroundColor="#fce4ec" Padding="5" Orientation="Horizontal" IsVisible="{Binding IsShowEmptyView, Converter={StaticResource IsReverseBoolConvertor}}">
+                    <StackLayout HorizontalOptions="StartAndExpand">
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Total Books :"></Label>
+                            <Label VerticalTextAlignment="Center" Text="{Binding TotalBooks}" FontSize="15" HorizontalOptions="StartAndExpand"></Label>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Total Amount :"></Label>
+                            <Label VerticalTextAlignment="Center" FormattedText="{Binding TotalBooksAmount, Converter={StaticResource PriceConverter},ConverterParameter=15}" HorizontalOptions="StartAndExpand"></Label>
+                        </StackLayout>
+                    </StackLayout>
+                    <material:MaterialButton ButtonType="Outlined" Text="Pay Order" BorderColor="{StaticResource PrimaryColor}" HorizontalOptions="End" Command="{Binding ProceedCommand}" CommandParameter="2"></material:MaterialButton>
+                </StackLayout>
+            </StackLayout>
+            <!--Empty View-->
+            <common:NoRecordFound >
+                <common:NoRecordFound.EmptyTemplate>
+                    <StackLayout>
+                        <Label Text="Books not found for this class." FontAttributes="Bold" HorizontalTextAlignment="Center"></Label>
+                    </StackLayout>
+                </common:NoRecordFound.EmptyTemplate>
+            </common:NoRecordFound>
+            <!--Loader-->
+            <common:Loader></common:Loader>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,89 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.9.4" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Plugin.Share" Version="7.1.1" />
+    <PackageReference Include="Xam.Plugin.Connectivity" Version="3.2.0" />
+    <PackageReference Include="Xamarin.Controls.SignaturePad.Forms" Version="3.0.0" />
+    <PackageReference Include="Xamarin.Forms" Version="4.4.0.991265" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />
+    <PackageReference Include="XF.Material" Version="1.5.7" />
+    <PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />
+    <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\BookSeller\UpdateOrder.xaml.cs">
+      <DependentUpon>UpdateOrder.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\BookSeller\Orders.xaml.cs">
+      <DependentUpon>Orders.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\BookSeller\OrderFilters.xaml.cs">
+      <DependentUpon>OrderFilters.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\BookSeller\OrderSortBy.xaml.cs">
+      <DependentUpon>OrderSortBy.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Order\ViewQRCode.xaml.cs">
+      <DependentUpon>ViewQRCode.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Order\ViewOrder.xaml.cs">
+      <DependentUpon>ViewOrder.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Order\OrderComplete.xaml.cs">
+      <DependentUpon>OrderComplete.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Order\PaymentOptions.xaml.cs">
+      <DependentUpon>PaymentOptions.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Order\BuyBooksSummary.xaml.cs">
+      <DependentUpon>BuyBooksSummary.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Student\AddEdit.xaml.cs">
+      <DependentUpon>AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\User\ParentsRegistration.xaml.cs">
+      <DependentUpon>ParentsRegistration.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\User\ParentsProfile.xaml.cs">
+      <DependentUpon>ParentsProfile.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\User\ValidateParentsRegistration.xaml.cs">
+      <DependentUpon>ValidateParentsRegistration.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Views\BookSeller\BookSellerHomePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\BookSeller\UpdateOrder.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\BookSeller\OrderFilters.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\BookSeller\OrderSortBy.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Order\BuyBooks.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Student\List.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

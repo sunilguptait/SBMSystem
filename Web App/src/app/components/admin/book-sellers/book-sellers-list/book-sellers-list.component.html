@@ -1,0 +1,102 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <!-- <section class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>
+                    Book Seller's
+                </h1>
+            </div>
+            <div class="col-sm-6 text-right">
+                <a href="#" routerLink="/admin/add-new-book-seller" class="btn btn-primary mr-2"> <i class="fa fa-plus"></i>
+                    New Book Seller</a>
+            </div>
+        </div>
+
+    </section> -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <table mat-table [dataSource]="bookSellersList" matSort matSortActive="FirstName" matSortDisableClear matSortDirection="asc">
+
+                        <ng-container matColumnDef="SNo">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> S. No </th>
+                            <td mat-cell *matCellDef="let element; let i = index;"> {{(pageSize*pageIndex)+(i+1)}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="RegistrationNo">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Registration No </th>
+                            <td mat-cell *matCellDef="let element"> {{element.RegistrationNo}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="FirmName">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Firm Name </th>
+                            <td mat-cell *matCellDef="let element"> {{element.FirmName}} </td>
+                        </ng-container>
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="FirstName">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Name </th>
+                            <td mat-cell *matCellDef="let element"> {{element.FullName}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="MobileNo">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Mobile No </th>
+                            <td mat-cell *matCellDef="let element"> {{element.MobileNo}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="EmailId">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Email Id </th>
+                            <td mat-cell *matCellDef="let element"> {{element.EmailId}} </td>
+                        </ng-container>
+
+                        <!-- <ng-container matColumnDef="CityName">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> City </th>
+                            <td mat-cell *matCellDef="let element"> {{element.CityName}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="StateName">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> State </th>
+                            <td mat-cell *matCellDef="let element"> {{element.StateName}} </td>
+                        </ng-container> -->
+
+
+                        <ng-container matColumnDef="Address1">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear style="max-width:250px;"> Address1 </th>
+                            <td mat-cell *matCellDef="let element"> {{element.Address1}} {{element.CityName}} {{element.StateName}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="actions">
+                            <th mat-header-cell *matHeaderCellDef> Actions </th>
+                            <td mat-cell *matCellDef="let element">
+                                <button [matMenuTriggerFor]="sdUserMenu" mat-icon-button>
+                                    <i class="fa fa-ellipsis-v"></i>
+                                </button>
+                                <mat-menu #sdUserMenu="matMenu" class="mymegamenu">
+                                    <a mat-menu-item (click)="onEditClick(element)">
+                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+                                    </a>
+                                    <!-- <a mat-menu-item routerLink="/admin/edit-book-seller/{{element.Id}}" href="#">
+                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit
+                                    </a> -->
+                                    <!-- <button mat-menu-item (click)="onContentDelete(element._id)">
+                                        <mat-icon>delete</mat-icon> Delete
+                                    </button> -->
+                                </mat-menu>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                    <mat-paginator #paginator [length]="totalSize" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]" [pageIndex]="pageIndex"
+                        (page)="pageEvent = handlePage($event)" *ngIf="bookSellersList.length > 0"></mat-paginator>
+                    <div class="recordnotfound" *ngIf="bookSellersList.length === 0">No records found</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>

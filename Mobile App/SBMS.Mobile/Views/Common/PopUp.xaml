@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+             xmlns:local="clr-namespace:SBMS.Mobile.Common"
+             x:Class="SBMS.Mobile.Views.Common.PopUp"
+                 
+                 >
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation 
+      PositionIn="Bottom"
+      PositionOut="Bottom"
+      ScaleIn="1.2"
+      ScaleOut="0.8"
+      DurationIn="300"
+      DurationOut="300"
+      EasingIn="SinOut"
+      EasingOut="SinIn"
+      HasBackgroundAnimation="True"/>
+    </pages:PopupPage.Animation>
+    <ScrollView>
+        <StackLayout x:Name="MainStack"></StackLayout>
+    </ScrollView>
+</pages:PopupPage>

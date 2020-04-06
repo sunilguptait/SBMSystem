@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             x:Class="SBMS.Mobile.Views.User.ParentsRegistration"
+             NavigationPage.HasNavigationBar="False"
+             >
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="20,10">
+                <Image Source="signinn" HeightRequest="100" WidthRequest="100" HorizontalOptions="Center"></Image>
+                <Label Text="Fill your details" VerticalOptions="Center" TextColor="{StaticResource PrimaryColor}" FontSize="Medium" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center"></Label>
+                <!--<material:MaterialLabel
+                                    Text="Be The Member" TypeScale="Subtitle1"
+                                    VerticalOptions="Center" TextColor="{StaticResource PrimaryColor}" FontSize="Medium" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" />-->
+
+                <material:MaterialTextField x:Name="Name" Placeholder="Name" Style="{StaticResource MetarialText}" 
+                                        Text="{Binding Model.Name , Mode=TwoWay}" 
+                                        ErrorText="Name is required."  />
+
+
+                <material:MaterialTextField x:Name="Email" Placeholder="Email Id" Style="{StaticResource MetarialText}" 
+                                        Text="{Binding Model.EmailId , Mode=TwoWay}"  InputType="Email" />
+                
+                <material:MaterialTextField x:Name="States" Placeholder="State" Style="{StaticResource MetarialText}" 
+                                        Text="{Binding Model.StateName , Mode=TwoWay}"  TextChanged="States_TextChanged"
+                                        InputType="Choice" Choices="{Binding  StatesList}" ChoicesBindingName="StateName"
+                                        ErrorText="State is required" />
+                
+                <material:MaterialTextField x:Name="Cities" Placeholder="City" Style="{StaticResource MetarialText}" 
+                                        Text="{Binding Model.CityName , Mode=TwoWay}"  
+                                        InputType="Choice" Choices="{Binding  CitiesList}" ChoicesBindingName="CityName"
+                                        ErrorText="City is required" />
+
+                <material:MaterialTextField x:Name="Address" Placeholder="Address" Style="{StaticResource MetarialText}" 
+                                        Text="{Binding Model.Address , Mode=TwoWay}" />
+
+
+                <!--<material:MaterialTextField x:Name="DOB" Placeholder="Birth Date" Style="{StaticResource MetarialText}" 
+                                        Text="{Binding Model.DOB , Mode=TwoWay}" />-->
+
+                <material:MaterialTextField x:Name="Password" Placeholder="Password" Style="{StaticResource MetarialText}" 
+                                        InputType="Password" Text="{Binding Model.Password , Mode=TwoWay}" 
+                                        ErrorText="Password is required." />
+
+                <material:MaterialTextField x:Name="ConfirmPassword" Placeholder="Confirm Password" Style="{StaticResource MetarialText}" 
+                                        InputType="Password" Text="{Binding Model.ConfirmPassword , Mode=TwoWay}" 
+                                        ErrorText="Confirm Password is required." />
+
+                <!--<material:MaterialRadioButtonGroup Choices="{Binding Genders}" HorizontalOptions="EndAndExpand"></material:MaterialRadioButtonGroup>-->
+
+                <material:MaterialButton Style="{StaticResource MatPrimaryButton}" Margin="0,10" Text="Submit" Clicked="Signup_Clicked" />
+
+                <!--<StackLayout Orientation="Horizontal">
+                    <Label Text="Already Have An Account?" HorizontalOptions="StartAndExpand" VerticalTextAlignment="Center"></Label>
+                    --><!--<Label Text="Don't Have Account" TextColor="Black" HorizontalOptions="StartAndExpand" VerticalTextAlignment="Center"></Label>--><!--
+                    <material:MaterialButton
+                                    Style="{StaticResource MatPrimaryButton}" Text="SIGN IN" 
+                                    ButtonType="Text" HorizontalOptions="End" TextColor="{StaticResource PrimaryColor}" Command="{Binding LoginCommand}" />
+                </StackLayout>-->
+
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

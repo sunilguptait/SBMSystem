@@ -1,0 +1,124 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <!-- <section class="content-header">
+        <h1>
+            Add Book
+        </h1>
+    </section> -->
+    <!-- Main content -->
+    <section class="content">
+        <form [formGroup]="bookForm" (ngSubmit)="onSubmit(bookForm.value)">
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Book Details</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <!-- form start -->
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Name</label>
+                                        <input type="text" class="form-control" placeholder="Name" formControlName="Book_Name" [ngClass]="{ 'has-error': submitted && hasError('Book_Name', 'required') }"
+                                            maxlength="200">
+                                        <div *ngIf="submitted && hasError('Book_Name', 'required')" class="text-danger">
+                                            Name is required</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Short Name</label>
+                                        <input type="text" class="form-control" placeholder="Short Name" formControlName="Book_ShortName" [ngClass]="{ 'has-error': submitted && hasError('Book_ShortName', 'required') }"
+                                            maxlength="50">
+                                        <div *ngIf="submitted && hasError('Book_ShortName', 'required')" class="text-danger">Short
+                                            name is required</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Book Type</label>
+                                        <select class="form-control" formControlName="Book_TypeId" [ngClass]="{ 'has-error': submitted && hasError('Book_TypeId', 'required') }">
+                                            <option value=''>Select</option>
+                                            <option *ngFor="let item of bookTypeList" [value]="item.BT_Id">{{ item.BT_Name
+                                                }}
+                                            </option>
+                                        </select>
+                                        <div *ngIf="submitted && hasError('Book_TypeId', 'required')" class="text-danger">Book
+                                            type is required
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Publisher</label>
+                                        <select class="form-control" formControlName="Book_PublisherId" [ngClass]="{ 'has-error': submitted && hasError('Book_PublisherId', 'required') }">
+                                            <option value=''>Select</option>
+                                            <option *ngFor="let item of publisherList" [value]="item.Publisher_id">{{ item.Publisher_Name
+                                                }}
+                                            </option>
+                                        </select>
+                                        <div *ngIf="submitted && hasError('Book_PublisherId', 'required')" class="text-danger">Publisher
+                                            is required
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Price</label>
+                                        <input type="text" class="form-control" placeholder="Price" formControlName="Book_Price" [ngClass]="{ 'has-error': submitted && hasError('Book_Price', 'required') }"
+                                            twoDigitDecimal maxlength="10">
+                                        <div *ngIf="submitted && hasError('Book_Price', 'required')" class="text-danger">
+                                            Price is required</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label>Book Image</label><br>
+                                                <input #imageInput style="display:none" type="file" onclick="this.value=null" (change)="onImageChange($event)" accept="image/*"
+                                                />
+                                                <button mat-flat-button color="primary" type="button" (click)="imageInput.click()">Choose
+                                                    Image
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <img *ngIf="bookImageURL" [src]="bookImageURL" class="img-fluid book-img img-responsive" alt="Responsive image">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- /.box-body -->
+
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary mr-2"><i class="fa fa-floppy-o"></i> Submit</button>
+                            &nbsp;
+                            <button type="button" class="btn btn-warning" (click)="onCancel()"> <i class="fa fa-window-close"></i>
+                                Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>

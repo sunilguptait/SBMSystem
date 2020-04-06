@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:converters="clr-namespace:SBMS.Mobile.Converters"
+             xmlns:local="clr-namespace:SBMS.Mobile.Common"
+             xmlns:common="clr-namespace:SBMS.Mobile.Views.Common"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             x:Class="SBMS.Mobile.Views.Order.PaymentOptions"
+             x:Name="PaymentOptionsPage"
+             Title="Payment Options"
+             >
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:PriceConverter x:Key="PriceConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+
+    <ContentPage.Content>
+        <StackLayout Padding="0">
+            <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" Padding="15,20" BackgroundColor="#ffebee">
+                <Label Text="Select options to pay" FontSize="17" HorizontalOptions="StartAndExpand" HorizontalTextAlignment="Center"></Label>
+                <Label VerticalTextAlignment="Center" FormattedText="{Binding TotalBooksAmount, Converter={StaticResource PriceConverter},ConverterParameter=17}" HorizontalOptions="End"></Label>
+            </StackLayout>
+
+            <StackLayout VerticalOptions="FillAndExpand">
+                <StackLayout>
+                    <material:MaterialRadioButton Text="Pay at school" x:Name="rbPayAtSchool"></material:MaterialRadioButton>
+                    <BoxView HeightRequest="1" BackgroundColor="#ddd" Margin="0"></BoxView>
+                </StackLayout>
+
+                <StackLayout>
+                    <material:MaterialRadioButton Text="Debit Card" IsEnabled="False"></material:MaterialRadioButton>
+                    <BoxView HeightRequest="1" BackgroundColor="#ddd"></BoxView>
+                </StackLayout>
+
+                <StackLayout>
+                    <material:MaterialRadioButton Text="Credit Card" IsEnabled="False"></material:MaterialRadioButton>
+                    <BoxView HeightRequest="1" BackgroundColor="#ddd"></BoxView>
+                </StackLayout>
+            </StackLayout>
+            <StackLayout>
+                <material:MaterialButton Text="Order" Clicked="Order_Clicked"></material:MaterialButton>
+            </StackLayout>
+        </StackLayout>
+       
+    </ContentPage.Content>
+</ContentPage>

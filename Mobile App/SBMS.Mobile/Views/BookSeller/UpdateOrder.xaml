@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SBMS.Mobile.Common"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             xmlns:controls="clr-namespace:SignaturePad.Forms;assembly=SignaturePad.Forms"
+             x:Class="SBMS.Mobile.Views.BookSeller.UpdateOrder"
+             Title="Update Order"
+             >
+
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="20">
+                <material:MaterialTextField Placeholder="Order No." Style="{StaticResource MetarialText}" 
+                                        Text="{Binding Model.OrderCode , Mode=TwoWay}" IsEnabled="False" />
+            
+                <material:MaterialTextField x:Name="DeliveryStatus" Placeholder="Delivery Status" Style="{StaticResource MetarialText}" 
+                                        Text="{Binding Model.OrderStatusName , Mode=TwoWay}"  
+                                        InputType="Choice" ChoicesBindingName="Text"  />
+
+                <material:MaterialTextField x:Name="PaymentStatus" Placeholder="Payment Status" Style="{StaticResource MetarialText}" 
+                                        Text="{Binding Model.PaymentStatusName , Mode=TwoWay}"  
+                                        InputType="Choice" ChoicesBindingName="Text" />
+
+                <Label Text="Receiver's Signature"></Label>
+                <controls:SignaturePadView
+	                x:Name="signatureView"
+	                StrokeWidth="3"
+	                StrokeColor="Black"
+	                BackgroundColor="#ddd"
+                    HeightRequest="70"
+                    />
+                
+                <material:MaterialButton Style="{StaticResource MatPrimaryButton}" Margin="0,10" Text="Submit" Clicked="Submit_Clicked" />
+
+            </StackLayout>
+
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

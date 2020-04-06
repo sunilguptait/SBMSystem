@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SBMS.Mobile.Common"
+             x:Class="SBMS.Mobile.Views.BookSeller.OrderSortBy"
+             BackgroundColor="White" Spacing="0" VerticalOptions="EndAndExpand" HorizontalOptions="FillAndExpand" HeightRequest="250"
+             >
+
+    <StackLayout BackgroundColor="#ddd" Padding="10">
+        <Label Text="SORT BY" FontSize="Small"></Label>
+    </StackLayout>
+    <ListView 
+                     ItemsSource="{Binding SortByList}" CachingStrategy="RecycleElement"
+                     HasUnevenRows="True" SeparatorVisibility="None"
+                     local:ItemTapped.Command="{Binding SortBySelectCommand}"
+                     VerticalOptions="StartAndExpand"
+                    >
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <StackLayout Padding="8">
+                        <Label Text="{Binding DisplayName}"></Label>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+</StackLayout>

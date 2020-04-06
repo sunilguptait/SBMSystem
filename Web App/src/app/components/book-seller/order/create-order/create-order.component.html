@@ -1,0 +1,267 @@
+<div class="content-wrapper">
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                    <div class="box box-primary" *ngIf="books && books.length>0 && orderStep==4">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Order Details</h3>
+                            </div>
+                            <div class="box-body">
+                                    Order Code: <b>{{orderDetails.OrderCode}}</b> |
+                                    Order Date: <b>{{orderDetails.OrderDate|date:'dd/MM/yyyy'}}</b> |
+                                    Order Status: <b>{{orderDetails.OrderStatusName}}</b> |
+                                    Payment Status: <b>{{orderDetails.PaymentStatusName}}</b> |
+                                    Payment Mode: <b>{{orderDetails.PaymentModeName}}</b>
+                                    <br>
+                                    Remark: <b>{{orderDetails.OrderPaymentRemark}}</b>
+                            </div>
+                        </div>
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Student Info</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row" *ngIf="orderStep==1 || orderStep==0">
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label>Class</label>
+                                    <select class="form-control" (change)="classChange()" [formControl]="classControl">
+                                        <option value='0'>Select</option>
+                                        <option *ngFor="let item of classList" [value]="item.Value">{{ item.Text }}
+                                        </option>
+                                    </select>
+                                    
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>Student</label>
+                                    <input type="text" class="form-control" placeholder="Search Student"
+                                        aria-label="Number" [formControl]="studentControl" [matAutocomplete]="auto">
+                                    <mat-autocomplete [displayWith]="getStudentName"
+                                        (optionSelected)='onStudentSelected($event)' #auto="matAutocomplete">
+                                        <mat-option *ngIf="isLoadingStudents">Loading...</mat-option>
+                                        <ng-container *ngIf="!isLoadingStudents">
+                                            <mat-option *ngFor="let option of filteredStudents | async"
+                                                [value]="option">
+                                                {{option.Name}} - {{option.ParentName}}
+                                            </mat-option>
+                                        </ng-container>
+                                    </mat-autocomplete>
+                                    <a href="javascript:;" (click)="addStudent()">Add New Student</a>
+                                </div>
+                            </div>
+                            <div class="col-sm-7" *ngIf="selectedStudent">
+                                <div class="form-group">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Student Name</th>
+                                                <th>Parent Name</th>
+                                                <th>Enrollment No</th>
+                                                <th>DOB</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>{{selectedStudent.Name}}</td>
+                                                <td>{{selectedStudent.ParentName}}</td>
+                                                <td>{{selectedStudent.EnrollmentNo}}</td>
+                                                <td>{{selectedStudent.DOB|date:'dd/MM/yyyy'}}</td>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="orderStep==2 || orderStep==3 || orderStep==4">
+                            Student Name: <b>{{selectedStudent.Name}}</b> |
+                            Parent Name: <b>{{selectedStudent.ParentName}}</b> |
+                            Enrollment No: <b>{{selectedStudent.EnrollmentNo}}</b> |
+                            DOB: <b>{{selectedStudent.DOB|date:'dd/MM/yyyy'}}</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="box box-primary" *ngIf="orderStep==1">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Books</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row book-row " *ngIf="!books || books.length==0">
+                            <div class="col-sm-12 text-center order-totals">
+                                <b>
+                                    Books not found for this student.
+                                </b>
+                            </div>
+                        </div>
+                        <ng-container *ngIf="books && books.length>0">
+                            <div class="row book-row font-weight-bold">
+                                <div class="col-sm-1 text-center">
+                                    SR
+                                </div>
+                                <div class="col-sm-1">
+                                    Image
+                                </div>
+                                <div class="col-sm-5">Book Name</div>
+                                <div class="col-sm-2">
+                                    Quantity
+                                </div>
+                                <div class="col-sm-2 text-right">Price</div>
+                                <div class="col-sm-1 text-center">
+                                    Action
+                                </div>
+                            </div>
+                            <div class="row book-row {{book.IsDeleted==true?'deleted-book':''}}"
+                                *ngFor="let book of books">
+                                <div class="col-sm-1 text-center">
+                                    {{book.RN}}
+                                </div>
+                                <div class="col-sm-1">
+                                    <img class="book-image" src="{{book.Book_Image}}" />
+                                </div>
+                                <div class="col-sm-5">{{book.Book_Name}} ({{book.Book_ShortName}})</div>
+                                <div class="col-sm-2">
+                                    <div class="input-group qty-field">
+                                        <span class="input-group-btn">
+                                            <button type="button" title="Decrease Quantity"
+                                                [disabled]="book.Quantity <= 1 || book.IsDeleted==true"
+                                                (click)="changeBookQty(book,1)"
+                                                class="btn btn-primary btn-flat">-</button>
+                                        </span>
+                                        <input type="text" value="{{book.Quantity}}" readonly
+                                            class="form-control text-center">
+                                        <span class="input-group-btn">
+                                            <button type="button" title="Increase Quantity"
+                                                [disabled]="book.Quantity >= book.DefaultQuantity || book.IsDeleted==true"
+                                                (click)="changeBookQty(book,2)"
+                                                class="btn btn-primary btn-flat">+</button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 text-right">{{book.Quantity}} x
+                                    {{book.Book_Price | number : '1.2-2'}} = <i class="fa fa-inr"></i>
+                                    {{(book.Quantity*book.Book_Price) | number : '1.2-2'}}</div>
+                                <div class="col-sm-1 text-center">
+                                    <button class="btn btn-danger" title="Remove Book" *ngIf="book.IsDeleted!=true"
+                                        (click)="removeAddBook(book)">
+                                        <i class="fa fa-trash-o"></i>
+                                    </button>
+                                    <button class="btn btn-success" title="Add Book" *ngIf="book.IsDeleted==true"
+                                        (click)="removeAddBook(book)">
+                                        <i class="fa fa-undo"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row book-row ">
+                                <div class="col-sm-11 text-right order-totals">
+                                    <b>
+                                        Total Books : {{getTotalBooks()}}, Total Amount : <i class="fa fa-inr"></i>
+                                        {{getTotalAmount()|number:'1.2-2'}}
+                                    </b>
+                                </div>
+                                <div class="col-sm-1 text-center">
+                                    <button class="btn btn-primary" [disabled]="getTotalBooks()==0"
+                                        (click)="changeStep(2)">Continue</button>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="box box-primary" *ngIf="books && books.length>0 && (orderStep==2 || orderStep==4)">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Summary</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row book-summary-row font-weight-bold">
+                            <div class="col-sm-1 text-center">
+                                SR
+                            </div>
+                            <div class="col-sm-6">Book Name</div>
+                            <div class="col-sm-2 text-center">
+                                Quantity
+                            </div>
+                            <div class="col-sm-2 text-right">Price</div>
+                        </div>
+                        <div class="row book-summary-row" *ngFor="let book of getSelectedBooks()">
+                            <div class="col-sm-1 text-center">
+                                {{book.RN}}
+                            </div>
+                            <div class="col-sm-6">{{book.Book_Name}} ({{book.Book_ShortName}})</div>
+                            <div class="col-sm-2 text-center">
+                                {{book.Quantity}}
+                            </div>
+                            <div class="col-sm-2 text-right">{{book.Quantity}} x
+                                {{book.Book_Price | number : '1.2-2'}} = <i class="fa fa-inr"></i>
+                                {{(book.Quantity*book.Book_Price) | number : '1.2-2'}}</div>
+                        </div>
+                        <div class="row book-summary-row ">
+                            <div class="col-sm-11 text-right order-summary-totals">
+                                <b>
+                                    Total Books : {{getTotalBooks()}}, Total Amount : <i class="fa fa-inr"></i>
+                                    {{getTotalAmount()|number:'1.2-2'}}
+                                </b>
+                            </div>
+                            <div class="col-sm-1 text-center">
+                                <button class="btn btn-primary margin-top-8" *ngIf="orderStep==2" (click)="changeStep(1)">Back</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box box-primary" *ngIf="books && books.length>0 && orderStep==2">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Payment Info</h3>
+                    </div>
+                    <div class="box-body">
+                        <form [formGroup]="orderForm" (ngSubmit)="placeOrder(orderForm.value)">
+                            <div class="row">
+                                <div class="col-sm-2">Payment Mode</div>
+                                <div class="col-sm-3">
+                                    <label class="radio-inline"><input formControlName="PaymentMode" type="radio"
+                                            checked name="PaymentMode" value="4">
+                                        Cash</label>
+                                    <label class="radio-inline"><input formControlName="PaymentMode" type="radio"
+                                            name="PaymentMode" value="5"> Card /
+                                        Wallet</label>
+                                </div>
+                                <div class="col-sm-1">
+                                    Remark
+                                </div>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control" formControlName="PaymentRemark">
+                                </div>
+                                <div class="col-sm-1">
+                                    <input class="btn btn-primary" [disabled]="getTotalBooks()==0" type="submit"
+                                        value="Place Order">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <!--  -->
+                <div class="box box-primary" *ngIf="orderInfo && orderStep==3">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Order Success</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row text-center">
+                            <div> <i class="fa fa-check-circle-o order-success-icon"></i></div>
+                            <div>
+                                <h3>Order created successfully.</h3>
+                                <h3>Order Code : <b>{{orderInfo.OrderCode}}</b></h3>
+                            </div>
+                            <br>
+                            <div>
+                                <a href="javascript:;" (click)="createNewOrder()">Click here to create new order</a>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

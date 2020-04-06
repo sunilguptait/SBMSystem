@@ -1,0 +1,46 @@
+.book-image{
+    width: 40px;
+}
+.qty-field{
+    width: 130px;
+}
+.book-summary-row{
+    border-top: 1px solid #c3d5eb;
+    margin: 0px 5px;
+    /* border-bottom: 1px solid #c3d5eb; */
+    line-height: 20px;
+    margin-bottom: 5px;
+    padding-top: 7px;
+}
+.book-row{
+    border-top: 1px solid #c3d5eb;
+    margin: 0px 5px;
+    /* border-bottom: 1px solid #c3d5eb; */
+    line-height: 20px;
+    /* margin-bottom: 5px; */
+    padding: 7px 0px;
+}
+.book-row input{
+    margin-top: 0px;
+}
+.deleted-book{
+    background-color: #efe5e5;
+    color: #9f9c9c;
+}
+.order-totals{
+    font-size: 20px;
+}
+.order-summary-totals{
+    font-size: 20px;
+    line-height: 48px;
+}
+.order-success-icon{
+    font-size: 150px;
+    color: #3c8dbc;
+}
+.mat-option{
+    font-size: 13px;
+    line-height: 30px;
+    height: 30px;
+    padding: 0 10px;
+}

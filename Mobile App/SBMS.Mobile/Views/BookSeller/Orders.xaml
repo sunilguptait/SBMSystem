@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SBMS.Mobile.Views.BookSeller.Orders"
+             x:Name="OrdersPage"
+             xmlns:rendrer="clr-namespace:SBMS.Mobile.CustomRendrer"
+             xmlns:local="clr-namespace:SBMS.Mobile.Common"
+             xmlns:common="clr-namespace:SBMS.Mobile.Views.Common"
+             xmlns:converters="clr-namespace:SBMS.Mobile.Converters"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             Title="Orders"
+             
+             >
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Filter" Command="{Binding FilterCommand}"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:IsReverseBoolConvertor x:Key="IsReverseBoolConvertor" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <ScrollView VerticalOptions="FillAndExpand">
+            <AbsoluteLayout VerticalOptions="Fill">
+                <!--List-->
+                <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+                    <!--<Frame Padding="0" HasShadow="False" IsVisible="{Binding IsShowEmptyView, Converter={StaticResource IsReverseBoolConvertor}}" >
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="1"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <StackLayout HorizontalOptions="Center" Padding="0,5">
+                                <ImageButton Source="sort" HeightRequest="23" WidthRequest="23" Command="{Binding SortByCommand}" BackgroundColor="Transparent"></ImageButton>
+                            </StackLayout>
+                            <BoxView BackgroundColor="Gray" Grid.Column="1"></BoxView>
+                            <StackLayout HorizontalOptions="Center" Grid.Column="2" Padding="0,5">
+                                <ImageButton Source="Filter" HeightRequest="23" WidthRequest="23" Command="{Binding FilterCommand}" BackgroundColor="Transparent"></ImageButton>
+                            </StackLayout>
+                        </Grid>
+                    </Frame>-->
+                    
+                    <rendrer:InfiniteListView 
+                    x:Name="StudentsList"
+                     ItemsSource="{Binding List}"
+                     VerticalOptions="FillAndExpand" HasUnevenRows="True" SeparatorVisibility="None"
+                     local:ItemTapped.Command="{Binding OrderSelectCommand}" SelectedItem="{Binding SelectedItem,Mode=TwoWay}"
+                     LoadMoreCommand="{Binding LoadListDataCommand}"
+                >
+                        <x:Arguments>
+                            <ListViewCachingStrategy>RecycleElement</ListViewCachingStrategy>
+                        </x:Arguments>
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Frame CornerRadius="2" Margin="6" Padding="10">
+                                            <Grid>
+                                            <Label Text="{Binding Order_Code,StringFormat='Order No : {0}'}"></Label>
+                                            <Label Text="{Binding St_Name,StringFormat='Student : {0}'}" Grid.Row="1"></Label>
+                                            <material:MaterialButton Text="View Order" ButtonType="Outlined" HorizontalOptions="EndAndExpand" Command="{Binding Source={x:Reference OrdersPage}, Path=BindingContext.ViewOrderCommand}" CommandParameter="{Binding Order_Id}"
+                                                          Grid.Column="1" Grid.RowSpan="2"></material:MaterialButton>
+
+                                            <Label Text="{Binding Order_date,StringFormat='Order Date : {0:MM/dd/yyyy}'}" Grid.Row="2" ></Label>
+                                            <Label Text="{Binding PaymentStatusName,StringFormat='Payment Status : {0}'}" Grid.Row="2" Grid.Column="1"  HorizontalOptions="EndAndExpand"></Label>
+                                          
+                                            <Label Text="{Binding Order_TotalAmount,StringFormat='Total Order Amount : {0}'}" Grid.Row="3"></Label>
+                                            <Label Text="{Binding OrderStatusName,StringFormat='Order Status : {0}'}" Grid.Row="3" Grid.Column="1" HorizontalOptions="EndAndExpand"></Label>
+                                        </Grid>
+                                        </Frame>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </rendrer:InfiniteListView>
+                </StackLayout>
+
+                <!--Empty View-->
+                <common:NoRecordFound >
+                    <common:NoRecordFound.EmptyTemplate>
+                        <StackLayout>
+                            <Label Text="No order found" FontAttributes="Bold"></Label>
+                        </StackLayout>
+                    </common:NoRecordFound.EmptyTemplate>
+                </common:NoRecordFound>
+
+                <!--Loader-->
+                <common:Loader></common:Loader>
+            </AbsoluteLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

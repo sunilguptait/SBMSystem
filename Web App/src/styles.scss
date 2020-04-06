@@ -1,0 +1,75 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import "~angular-notifier/styles";
+.bg-login
+{
+    height: 100% !important;
+    background-repeat: no-repeat;
+    background-image: linear-gradient(#6891a2, #e5e5e5);
+}
+input.has-error,textarea.has-error,select.has-error
+{
+    border: 1px solid #a94442 !important;
+}
+.height-100
+{
+    height: 100% !important;
+}
+.m-0
+{
+    margin: 0;
+}
+.skin-blue .content-header
+{
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    background: #dee6ef !important;
+}
+.content-header h1{
+    margin: 0;
+}
+.recordnotfound 
+{
+    text-align: center;
+    padding: 10px;
+}
+.mat-table
+{
+    width: 100%;
+}
+.font-weight-bold{
+    font-weight: bold;
+}
+@for $i from 1 through 100 {
+    $value: 1px * $i;
+    .margin-top-#{$i} { 
+        margin-top: $value!important;
+    }
+    .margin-bottom-#{$i} { 
+        margin-bottom: $value!important;
+    }
+    .margin-left-#{$i} { 
+        margin-left: $value!important;
+    }
+    .margin-right-#{$i} { 
+        margin-right: $value!important;
+    }
+    .padding-top-#{$i} { 
+        padding-top: $value!important;
+    }
+    .padding-bottom-#{$i} { 
+        padding-bottom: $value!important;
+    }
+    .padding-left-#{$i} { 
+        padding-left: $value!important;
+    }
+    .padding-right-#{$i} { 
+        padding-right: $value!important;
+    }
+}
+
+th.mat-header-cell {
+    font-weight: bold;
+    font-size: 14px;
+    color: #2c2c2c;
+}

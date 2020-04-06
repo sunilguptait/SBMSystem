@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SBMS.Mobile.Common"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             x:Class="SBMS.Mobile.Views.BookSeller.OrderFilters"
+             Title="Filter Order's"
+             >
+
+    <ContentPage.Resources>
+        <Style x:Key="MetarialDOB" TargetType="material:MaterialDateField">
+            <Setter  Property="PlaceholderColor" Value="#6D6D6D"></Setter>
+            <Setter  Property="TintColor" Value="#255073"></Setter>
+            <Setter  Property="AlwaysShowUnderline" Value="True"></Setter>
+            <Setter  Property="UnderlineColor" Value="#6D6D6D"></Setter>
+            <Setter  Property="HorizontalPadding" Value="0"></Setter>
+            <Setter  Property="TextColor" Value="#222"></Setter>
+            <Setter  Property="BackgroundColor" Value="Transparent"></Setter>
+            <Setter  Property="ShouldAnimateUnderline" Value="True"></Setter>
+            <Setter  Property="ErrorColor" Value="#B00020"></Setter>
+            <Setter  Property="TextFontSize" Value="13"></Setter>
+            <Setter  Property="Margin" Value="0,-20,0,0"></Setter>
+            <Setter Property="PlaceholderFontFamily" Value="{StaticResource NormalFont}"></Setter>
+            <Setter Property="TextFontFamily" Value="{StaticResource NormalFont}"></Setter>
+            <!--<Setter Property="TextFontFamily" Value="verdana.ttf#verdana"></Setter>
+                <Setter Property="PlaceholderFontFamily" Value="verdana.ttf#verdana"></Setter>-->
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="20">
+
+                <material:MaterialTextField x:Name="OrderNumber" Placeholder="Order Number" Style="{StaticResource MetarialText}" 
+                                        Text="{Binding FilterModel.OrderNumber, Mode=TwoWay}" InputType="Numeric" />
+
+                <material:MaterialDateField x:Name="OrderDate" Placeholder="Order Date" Style="{StaticResource MetarialDOB}" 
+                                        Date="{Binding FilterModel.OrderDate , Mode=TwoWay}" />
+
+                <material:MaterialTextField x:Name="DeliveryStatus" Placeholder="Delivery Status" Style="{StaticResource MetarialText}" 
+                                        Text="{Binding FilterModel.DeliveryStatusName , Mode=TwoWay}"  
+                                        InputType="Choice" ChoicesBindingName="Text"  />
+
+                <material:MaterialTextField x:Name="PaymentStatus" Placeholder="Payment Status" Style="{StaticResource MetarialText}" 
+                                        Text="{Binding FilterModel.PaymentStatusName , Mode=TwoWay}"  
+                                        InputType="Choice" ChoicesBindingName="Text" />
+
+                <material:MaterialButton Style="{StaticResource MatPrimaryButton}" Margin="0,10" Text="Apply" Clicked="Apply_Clicked" />
+
+            </StackLayout>
+
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

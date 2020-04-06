@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:extensions="clr-namespace:SBMS.Mobile.Converters"
+             x:Class="SBMS.Mobile.Views.Common.NoRecordFound"
+             Padding="0,0,0,0"  IsVisible="{Binding IsShowEmptyView}"
+             AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1"
+             >
+    
+    <StackLayout x:Name="EmptyTemplateStack" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+    
+</StackLayout>

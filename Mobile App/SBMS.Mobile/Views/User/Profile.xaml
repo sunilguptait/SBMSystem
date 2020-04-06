@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             x:Class="SBMS.Mobile.Views.User.Profile"
+             Title="Edit Profile"
+             >
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="15">
+
+                <Image Source="userprofile" HeightRequest="120" Aspect="AspectFit"></Image>
+                
+                    <material:MaterialTextField x:Name="FirstName" Placeholder="First Name" Style="{StaticResource MetarialText}" 
+                                        Text="{Binding Model.FirstName , Mode=TwoWay}" 
+                                        ErrorText="Required."  />
+
+                    <material:MaterialTextField x:Name="LastName" Placeholder="Last Name" Style="{StaticResource MetarialText}" 
+                                        Text="{Binding Model.LastName , Mode=TwoWay}" 
+                                        ErrorText="Required." />
+
+               
+                
+                <material:MaterialTextField x:Name="Email" Placeholder="Email" Style="{StaticResource MetarialText}" 
+                                        Text="{Binding Model.Email , Mode=TwoWay}" 
+                                        ErrorText="Email is required."  InputType="Email" IsEnabled="False" />
+
+                <!--<material:MaterialTextField x:Name="Company" Placeholder="Company" Style="{StaticResource MetarialText}" 
+                                        Text="{Binding Model.Company , Mode=TwoWay}" 
+                                        ErrorText="Company is required." />-->
+
+                <!--<material:MaterialTextField x:Name="Phone" Placeholder="Mobile No." Style="{StaticResource MetarialText}" 
+                                        Text="{Binding Model.Mobile , Mode=TwoWay}" InputType="Telephone" IsEnabled="False" />-->
+
+                <StackLayout Orientation="Horizontal" IsVisible="False">
+                    <material:MaterialRadioButton x:Name="Male" Text="Male" IsSelected="True" SelectedChanged="GenderSelection" SelectedColor="{Binding PrimaryColor}"></material:MaterialRadioButton>
+                    <material:MaterialRadioButton x:Name="Female" Text="Female" SelectedChanged="GenderSelection" SelectedColor="{Binding PrimaryColor}"></material:MaterialRadioButton>
+                </StackLayout>
+
+                <!--<Grid Margin="0,0,0,30">
+                    <material:MaterialButton ButtonType="Outlined" Text="My Address" Command="{Binding MyAddressesCommand}"></material:MaterialButton>
+                    <material:MaterialButton ButtonType="Outlined" Text="Change Password" Command="{Binding ChangePasswordCommand}" Grid.Column="1"></material:MaterialButton>
+                </Grid>-->
+                
+                <material:MaterialButton Style="{StaticResource MatPrimaryButton}" Margin="0,10" Text="Save" Clicked="Save_Clicked" />
+
+                </StackLayout>
+
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

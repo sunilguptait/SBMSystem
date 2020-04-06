@@ -1,0 +1,82 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">Student Details</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="studentForm" (ngSubmit)="onSubmit(studentForm.value)">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Class</label>
+                                    <select class="form-control" formControlName="ClassId"
+                                        [ngClass]="{ 'has-error': submitted && hasError('ClassId', 'required') }">
+                                        <option value=''>Select</option>
+                                        <option *ngFor="let item of classList" [value]="item.Value">{{ item.Text }}
+                                        </option>
+                                    </select>
+                                    <div *ngIf="submitted && hasError('ClassId', 'required')" class="text-danger">Class
+                                        is required
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Name</label>
+                                    <input type="text" class="form-control" placeholder="Name" formControlName="Name"
+                                        [ngClass]="{ 'has-error': submitted && hasError('Name', 'required') }"
+                                        maxlength="250">
+                                    <div *ngIf="submitted && hasError('Name', 'required')" class="text-danger">
+                                        Name is required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Parent Name</label>
+                                    <input type="text" class="form-control" placeholder="Parent Name"
+                                        formControlName="ParentName"
+                                        [ngClass]="{ 'has-error': submitted && hasError('ParentName', 'required') }"
+                                        maxlength="250">
+                                    <div *ngIf="submitted && hasError('ParentName', 'required')" class="text-danger">
+                                        Parent Name is required</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Mobile No.</label>
+                                    <input type="text" class="form-control" placeholder="Mobile No." numbersOnly
+                                        formControlName="MobileNo"
+                                        [ngClass]="{ 'has-error': submitted && hasError('MobileNo', 'required') }"
+                                        maxlength="10">
+                                    <div *ngIf="submitted && hasError('MobileNo', 'required')" class="text-danger">
+                                        Mobile
+                                        No. is required</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary mr-2"><i class="fa fa-floppy-o"></i>
+                            Submit</button>
+                        &nbsp;
+                        <button type="button" class="btn btn-warning" (click)="onCancel()"> <i
+                                class="fa fa-window-close"></i>
+                            Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

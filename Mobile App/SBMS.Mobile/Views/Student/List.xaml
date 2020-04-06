@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:rendrer="clr-namespace:SBMS.Mobile.CustomRendrer"
+              xmlns:local="clr-namespace:SBMS.Mobile.Common"
+             xmlns:common="clr-namespace:SBMS.Mobile.Views.Common"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             mc:Ignorable="d"
+             x:Class="SBMS.Mobile.Views.Student.List">
+    
+        <material:MaterialButton ButtonType="Outlined" Command="{Binding AddNewStudentCommand}" Text="Add New" WidthRequest="120" HorizontalOptions="End"></material:MaterialButton>
+
+    <AbsoluteLayout VerticalOptions="Fill">
+
+        <!--List-->
+        <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+            <rendrer:InfiniteListView 
+                    x:Name="StudentsList"
+                     ItemsSource="{Binding List}"
+                     VerticalOptions="FillAndExpand" HasUnevenRows="True" SeparatorVisibility="None"
+                     local:ItemTapped.Command="{Binding StudentSelectCommand}" SelectedItem="{Binding SelectedItem,Mode=TwoWay}"
+                     LoadMoreCommand="{Binding LoadListDataCommand}"
+                >
+                <x:Arguments>
+                    <ListViewCachingStrategy>RecycleElement</ListViewCachingStrategy>
+                </x:Arguments>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame CornerRadius="3" Margin="5" Padding="5">
+                                <StackLayout HorizontalOptions="FillAndExpand">
+                                    <Label Text="{Binding Name,StringFormat='Order Number: {0}'}" FontSize="13" FontAttributes="Bold"></Label>
+                                    <Label Text="{Binding SchoolName,StringFormat='Order Status: {0}'}"></Label>
+                                    <Label Text="{Binding DOB,StringFormat='Order Date: {0: MMMM dd,yyyy}'}"></Label>
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </rendrer:InfiniteListView>
+        </StackLayout>
+
+        <!--Empty View-->
+        <common:NoRecordFound >
+            <common:NoRecordFound.EmptyTemplate>
+                <StackLayout>
+                    <Label Text="No students found" FontAttributes="Bold"></Label>
+                    <!--<material:MaterialButton ButtonType="Outlined" Text="Reset" Command="{Binding LoadListDataCommand}"></material:MaterialButton>-->
+                </StackLayout>
+            </common:NoRecordFound.EmptyTemplate>
+        </common:NoRecordFound>
+
+        <!--Loader-->
+        <common:Loader></common:Loader>
+    </AbsoluteLayout>
+    
+</StackLayout>

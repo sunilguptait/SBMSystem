@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             x:Class="SBMS.Mobile.Views.User.AddEdit">
+    <ContentPage.Resources>
+        <Style x:Key="MetarialDOB" TargetType="material:MaterialDateField">
+            <Setter  Property="PlaceholderColor" Value="#6D6D6D"></Setter>
+            <Setter  Property="TintColor" Value="#255073"></Setter>
+            <Setter  Property="AlwaysShowUnderline" Value="True"></Setter>
+            <Setter  Property="UnderlineColor" Value="#6D6D6D"></Setter>
+            <Setter  Property="HorizontalPadding" Value="0"></Setter>
+            <Setter  Property="TextColor" Value="#222"></Setter>
+            <Setter  Property="BackgroundColor" Value="Transparent"></Setter>
+            <Setter  Property="ShouldAnimateUnderline" Value="True"></Setter>
+            <Setter  Property="ErrorColor" Value="#B00020"></Setter>
+            <Setter  Property="TextFontSize" Value="13"></Setter>
+            <Setter  Property="Margin" Value="0,-20,0,0"></Setter>
+            <Setter Property="PlaceholderFontFamily" Value="{StaticResource NormalFont}"></Setter>
+            <Setter Property="TextFontFamily" Value="{StaticResource NormalFont}"></Setter>
+            <!--<Setter Property="TextFontFamily" Value="verdana.ttf#verdana"></Setter>
+                <Setter Property="PlaceholderFontFamily" Value="verdana.ttf#verdana"></Setter>-->
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="20">
+
+                <material:MaterialTextField x:Name="StudentName" Placeholder="Name" Style="{StaticResource MetarialText}" 
+                                        Text="{Binding Model.Name , Mode=TwoWay}" 
+                                        ErrorText="Name is required."  />
+
+                <material:MaterialTextField x:Name="EnrollmentNo" Placeholder="Enrollment No" Style="{StaticResource MetarialText}" 
+                                        Text="{Binding Model.EnrollmentNo , Mode=TwoWay}" 
+                                        ErrorText="Enrollment no is required" />
+
+                <material:MaterialDateField x:Name="DOB" Placeholder="Date of birth" Style="{StaticResource MetarialDOB}" 
+                                        Date="{Binding Model.DOB , Mode=TwoWay}" 
+                                        ErrorText="DOB is required" />
+
+                <material:MaterialTextField x:Name="School" Placeholder="School" Style="{StaticResource MetarialText}" 
+                                        Text="{Binding Model.SchoolName , Mode=TwoWay}"  
+                                        InputType="Choice" Choices="{Binding  SchoolsList}" ChoicesBindingName="Text"
+                                        ErrorText="School is required" />
+
+                <material:MaterialTextField x:Name="Class" Placeholder="Class" Style="{StaticResource MetarialText}" 
+                                        Text="{Binding Model.ClassName , Mode=TwoWay}"  
+                                        InputType="Choice" Choices="{Binding  ClassList}" ChoicesBindingName="Text"
+                                        ErrorText="Class is required" />
+
+                <material:MaterialButton Style="{StaticResource MatPrimaryButton}" Margin="0,10" Text="Save" Clicked="Save_Clicked" />
+
+            </StackLayout>
+
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:converters="clr-namespace:SBMS.Mobile.Converters"
+             xmlns:local="clr-namespace:SBMS.Mobile.Common"
+             xmlns:common="clr-namespace:SBMS.Mobile.Views.Common"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             x:Class="SBMS.Mobile.Views.Order.OrderComplete"
+             x:Name="OrderCompletePage"
+             Title="Order Status"
+             >
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:PriceConverter x:Key="PriceConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+
+    <ContentPage.Content>
+        <StackLayout Padding="0">
+            <StackLayout HorizontalOptions="FillAndExpand" Padding="15,20" BackgroundColor="#ffebee">
+                <Label Text="Success !" FontSize="20" HorizontalOptions="StartAndExpand" HorizontalTextAlignment="Center"></Label>
+                <Label Text="Your order is placed."></Label>
+            </StackLayout>
+
+            <StackLayout VerticalOptions="FillAndExpand">
+                <StackLayout Orientation="Horizontal" Padding="15">
+                    <Label Text="Order Number :" HorizontalOptions="StartAndExpand"></Label>
+                    <Label Text="{Binding OrderCode}" FontSize="15" HorizontalOptions="End"></Label>
+                </StackLayout>
+                <BoxView HeightRequest="1" BackgroundColor="#ddd"></BoxView>
+
+                <material:MaterialButton Text="Done" Clicked="Done_Clicked" Margin="0,50,0,0" WidthRequest="120" HorizontalOptions="Center"></material:MaterialButton>
+            </StackLayout>
+        </StackLayout>
+
+    </ContentPage.Content>
+</ContentPage>

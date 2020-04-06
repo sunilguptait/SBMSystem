@@ -1,0 +1,157 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <!-- <section class="content-header">
+        <h1>
+            {{ pageTitle}}
+        </h1>
+    </section> -->
+    <!-- Main content -->
+    <section class="content">
+        <form [formGroup]="bookSellerForm" (ngSubmit)="onSubmit(bookSellerForm.value)">
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">User Details</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <!-- form start -->
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Firm Name</label>
+                                        <input type="text" class="form-control" appUppercase placeholder="Firm Name" formControlName="FirmName" [ngClass]="{ 'has-error': submitted && hasError('FirmName', 'required') }" maxlength="250">
+                                        <div *ngIf="submitted && hasError('FirmName', 'required')" class="text-danger"> Firm
+                                            name is required</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Registration No</label>
+                                        <input type="text" class="form-control" appUppercase placeholder="Registration No" formControlName="RegistrationNo" [ngClass]="{ 'has-error': submitted && hasError('RegistrationNo', 'required') }"  maxlength="50">
+                                        <div *ngIf="submitted && hasError('RegistrationNo', 'required')" class="text-danger">Registration
+                                            no is required</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>First Name</label>
+                                        <input type="text" class="form-control" appUppercase placeholder="First Name" formControlName="FirstName" [ngClass]="{ 'has-error': submitted && hasError('FirstName', 'required') }"  maxlength="30">
+                                        <div *ngIf="submitted && hasError('FirstName', 'required')" class="text-danger">First
+                                            name is required</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Last Name</label>
+                                        <input type="text" class="form-control" appUppercase placeholder="Last Name" formControlName="LastName" [ngClass]="{ 'has-error': submitted && hasError('LastName', 'required') }"  maxlength="30">
+                                        <div *ngIf="submitted && hasError('LastName', 'required')" class="text-danger">Last
+                                            name is required</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Mobile No.</label>
+                                        <input type="text" class="form-control" placeholder="Mobile No." [readonly]="bookSellerDetails.Id>0" numbersOnly formControlName="MobileNo" [ngClass]="{ 'has-error': submitted && hasError('MobileNo', 'required') }"
+                                            maxlength="10" (blur)="checkMobileNumberExists()">
+                                        <div *ngIf="submitted && hasError('MobileNo', 'required')" class="text-danger">Mobile
+                                            No. is required</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Email Address</label>
+                                        <input type="email" class="form-control" (blur)="checkEmailIdExists()" [readonly]="bookSellerDetails.Id>0" placeholder="Email Address" formControlName="EmailId" [ngClass]="{ 'has-error': submitted && hasError('EmailId', 'required') }"  maxlength="50">
+                                        <div *ngIf="submitted && hasError('EmailId', 'required')" class="text-danger">Email
+                                            address is required</div>
+                                        <div *ngIf="submitted && hasError('EmailId', 'email')" class="text-danger">Invalid
+                                            email address</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Address 1</label>
+                                        <input type="text" class="form-control" placeholder="Address 1" formControlName="Address1" [ngClass]="{ 'has-error': submitted && hasError('Address1', 'required') }"  maxlength="50"
+                                            maxlength="250">
+                                        <div *ngIf="submitted && hasError('Address1', 'required')" class="text-danger">Address
+                                            1 is required</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Address 2</label>
+                                        <input type="text" class="form-control" placeholder="Address 2" formControlName="Address2" [ngClass]="{ 'has-error': submitted && hasError('Address2', 'required') }" maxlength="50">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>State</label>
+                                        <select class="form-control" formControlName="StateId" (change)="getCities()" [ngClass]="{ 'has-error': submitted && hasError('StateId', 'required') }">
+                                            <option value=''>Select</option>
+                                            <option *ngFor="let item of statesList" [value]="item.StateId">{{ item.StateName
+                                                }}
+                                            </option>
+                                        </select>
+                                        <div *ngIf="submitted && hasError('StateId', 'required')" class="text-danger">
+                                            State is required</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>City</label>
+                                        <select class="form-control" formControlName="CityId" [ngClass]="{ 'has-error': submitted && hasError('CityId', 'required') }">
+                                            <option value=''>Select</option>
+                                            <option *ngFor="let item of citiesList" [value]="item.CityId">{{ item.CityName
+                                                }}
+                                            </option>
+                                        </select>
+                                        <div *ngIf="submitted && hasError('CityId', 'required')" class="text-danger">
+                                            City is required</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Post Code</label>
+                                        <input type="text" class="form-control" placeholder="Post Code" numbersOnly formControlName="PostCode" [ngClass]="{ 'has-error': submitted && hasError('PostCode', 'required') }"
+                                            maxlength="6">
+                                        <div *ngIf="submitted && hasError('PostCode', 'required')" class="text-danger">
+                                            Post code is required</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- /.box-body -->
+
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary mr-2"><i class="fa fa-floppy-o"></i> Submit</button>
+                            &nbsp;
+                            <button type="button" class="btn btn-warning" (click)="onCancel()"> <i class="fa fa-window-close"></i>
+                                Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>

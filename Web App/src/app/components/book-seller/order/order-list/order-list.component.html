@@ -1,0 +1,109 @@
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>
+                    Order's
+                </h1>
+            </div>
+            <div class="col-sm-6 text-right">
+                <a href="#" routerLink="/order-seller/order/create" class="btn btn-primary mr-2"> <i
+                        class="fa fa-plus"></i>
+                    Add New</a> &nbsp;
+                    <a href="javascript:;" (click)="printInvoice()" class="btn btn-primary mr-2"> <i
+                        class="fa fa-plus"></i>
+                    Print Invoice</a>
+            </div>
+        </div>
+
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <table mat-table [dataSource]="orderList" matSort matSortActive="Order_Code" matSortDisableClear
+                        matSortDirection="desc">
+                        <ng-container matColumnDef="Select">
+                            <th mat-header-cell *matHeaderCellDef>
+                              <mat-checkbox color="primary" (change)="$event ? masterToggle() : null"
+                                            [checked]="selection.hasValue() && isAllSelected()"
+                                            [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                            [aria-label]="checkboxLabel()">
+                              </mat-checkbox>
+                            </th>
+                            <td mat-cell *matCellDef="let row">
+                              <mat-checkbox color="primary" (click)="$event.stopPropagation()"
+                                            (change)="$event ? selection.toggle(row) : null"
+                                            [checked]="selection.isSelected(row)"
+                                            [aria-label]="checkboxLabel(row)">
+                              </mat-checkbox>
+                            </td>
+                          </ng-container>
+                        
+                        <ng-container matColumnDef="Order_Code">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Order Code </th>
+                            <td mat-cell *matCellDef="let element"> {{element.Order_Code}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="St_Name">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Student Name </th>
+                                <td mat-cell *matCellDef="let element"> {{element.St_Name}} </td>
+                            </ng-container>
+
+                        <ng-container matColumnDef="Order_Date">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Order Date </th>
+                            <td mat-cell *matCellDef="let element"> {{element.Order_date|date:'dd/MM/yyyy'}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="Order_PaymentMode">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Order Payment Mode </th>
+                            <td mat-cell *matCellDef="let element"> {{element.PaymentModeName}} </td>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="Order_PaymentStatus">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Payment Status </th>
+                            <td mat-cell *matCellDef="let element"> {{element.PaymentStatusName}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="Order_Status">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Order Status </th>
+                            <td mat-cell *matCellDef="let element"> {{element.OrderStatusName}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="Order_TotalAmount">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Total Order Amount </th>
+                            <td mat-cell *matCellDef="let element"> <i class="fa fa-inr"></i>
+                                {{element.Order_TotalAmount|number:'1.2-2'}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="actions">
+                                <th mat-header-cell *matHeaderCellDef> Actions </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <button [matMenuTriggerFor]="sdUserMenu" mat-icon-button>
+                                        <i class="fa fa-ellipsis-v"></i>
+                                    </button>
+                                    <mat-menu #sdUserMenu="matMenu" class="mymegamenu">
+                                        <a mat-menu-item (click)="showInvoice(element)">
+                                            <i class="fa fa-print" aria-hidden="true"></i>  Invoice
+                                        </a>
+                                        <a mat-menu-item [routerLink]="['/book-seller/order/details/'+element.Order_Id+'/'+element.St_id]">
+                                            <i class="fa fa-eye" aria-hidden="true"></i>  Order Details
+                                        </a>
+                                    </mat-menu>
+                                </td>
+                            </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                    <mat-paginator #paginator [length]="totalSize" [pageSize]="pageSize"
+                        [pageSizeOptions]="[5, 10, 25, 100]" [pageIndex]="pageIndex"
+                        (page)="pageEvent = handlePage($event)" *ngIf="orderList.length > 0"></mat-paginator>
+                    <div class="recordnotfound" *ngIf="orderList.length === 0">No records found</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
